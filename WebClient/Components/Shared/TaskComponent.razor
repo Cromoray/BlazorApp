@@ -1,0 +1,9 @@
+﻿
+<MudPaper Style="width: 300px" Class="mia-classe">
+    <div style="margin: 20px">
+        <MudText><b>Titolo:</b> @Value.Title</MudText>
+        <MudText><b>Descrizione:</b> @Value.Description</MudText>
+        <MudText><b>Data scadenza:</b> @Value.ExpireDate!.Value.ToString("dd/MM/yyyy")</MudText>
+        <MudCheckBox T="bool" Label="Fatto" Value="Value.Done" ValueChanged="OnCheckChanged" />
+    </div>
+</MudPaper>
