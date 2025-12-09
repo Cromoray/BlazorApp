@@ -1,4 +1,5 @@
 ﻿@page "/tasks"
+@using System.Threading.Tasks
 @inject ISnackbar _snackbarProvider
 @inject ITaskService _taskService
 
@@ -60,7 +61,23 @@
         _items = new();
     }
 
-    private void AddTask()
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+
+        if (firstRender)
+        {
+            var result = await _taskService.GetAll();
+
+            if (result != null)
+            {
+                _items = result.ToList();
+                await InvokeAsync(() => StateHasChanged());
+            }
+        }
+    }
+
+    private async Task AddTask()
     {
         if (string.IsNullOrWhiteSpace(_title))
         {
@@ -80,11 +97,20 @@
             return;
         }
 
-        _items.Add(new() { Title = _title, Description = _description, ExpireDate = _expireDate });
+        var newItem = new TaskItem() { Title = _title, Description = _description, ExpireDate = _expireDate };
+        var saveResult = await _taskService.Save(newItem);
+
+        if (saveResult)
+            _items.Add(newItem);
+
     }
 
-    private void OnValueChanged(TaskItem value)
+    private async void OnValueChanged(TaskItem value)
     {
-        _snackbarProvider.Add("Valore Modificato", Severity.Info);
+        var newItem = new TaskItem() { Title = _title, Description = _description, ExpireDate = _expireDate };
+        var saveResult = await _taskService.Save(newItem);
+
+        if (saveResult)
+            _snackbarProvider.Add("Valore Modificato", Severity.Success);
     }
 }
