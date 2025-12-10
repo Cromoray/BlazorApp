@@ -1,5 +1,6 @@
 ﻿@page "/tasks"
 @using System.Threading.Tasks
+@attribute [Authorize]
 @inject ISnackbar _snackbarProvider
 @inject ITaskService _taskService
 

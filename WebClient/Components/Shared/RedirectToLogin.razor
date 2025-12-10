@@ -1,0 +1,15 @@
+﻿@inject NavigationManager Navigation
+
+@code {
+    protected override void OnInitialized()
+    {
+        // Il percorso può essere modificato per includere l'URL corrente
+        // in modo che l'utente possa essere reindirizzato indietro dopo il login.
+
+        var returnUrl = Navigation.ToBaseRelativePath(Navigation.Uri);
+        var loginUri = $"/Account/Login?returnUrl={returnUrl}";
+
+        // Forza il reindirizzamento all'URI di Login
+        Navigation.NavigateTo(loginUri, forceLoad: true);
+    }
+}

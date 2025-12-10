@@ -1,0 +1,31 @@
+﻿@page "/Account/Login"
+
+<form method="post" action="/api/authentication/login">
+    <MudStack>
+        <MudTextField name="username" @bind-Value="_username" Label="Username" />
+        <MudTextField name="password" @bind-Value="_password" Label="Password" InputType="@(passwordVisible? InputType.Text: InputType.Password)"
+                      Adornment="Adornment.End" AdornmentIcon="@(passwordVisible? Icons.Material.Filled.Visibility : Icons.Material.Filled.VisibilityOff)" OnAdornmentClick="TogglePasswordVisibility" />
+
+        <MudButton Variant="Variant.Outlined" ButtonType="ButtonType.Submit">Login</MudButton>
+    </MudStack>
+</form>
+
+@code {
+    private string _username;
+    private string _password;
+
+    bool passwordVisible = false;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        _username = string.Empty;
+        _password = string.Empty;
+    }
+
+    private void TogglePasswordVisibility()
+    {
+        passwordVisible = !passwordVisible;
+    }
+}

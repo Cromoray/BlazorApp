@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.EntityFrameworkCore;
 using Server.Controlles;
 using Server.Interfaces;
 using Server.Repositories;
@@ -15,11 +16,14 @@ builder.Services.AddDbContext<Context>(options =>
     options.UseSqlite($"Data Source={dbName};");
 });
 
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ITaskRepository, TaskRepository>();
+
 builder.Services.AddScoped<ITaskService, TaskService>();
 
 var host = builder.Build();
 
+host.AddUserController();
 host.AddTaskController();
 
 host.Run();
