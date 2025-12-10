@@ -20,8 +20,8 @@
     </MudAppBar>
     <MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
         <MudNavMenu>
-            <MudNavLink Href="/">Home</MudNavLink>
-            <MudNavLink Href="/tasks">Task list</MudNavLink>
+            <MudNavLink Href="/" Match="NavLinkMatch.All">Home</MudNavLink>
+            <MudNavLink Href="/tasks" Match="NavLinkMatch.Prefix">Task list</MudNavLink>
         </MudNavMenu>
     </MudDrawer>
     <MudMainContent>
